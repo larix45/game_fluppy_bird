@@ -1,0 +1,163 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://scripts/background.gd" type="Script" id=2]
+[ext_resource path="res://scenes/bird.tscn" type="PackedScene" id=3]
+[ext_resource path="res://images/up_button_pressed.png" type="Texture" id=4]
+[ext_resource path="res://images/up_button.png" type="Texture" id=5]
+[ext_resource path="res://UbuntuMono-BI.ttf" type="DynamicFontData" id=6]
+
+[sub_resource type="CameraTexture" id=1]
+
+[sub_resource type="DynamicFont" id=2]
+outline_color = Color( 0.701961, 0.054902, 0.054902, 1 )
+use_mipmaps = true
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 10
+outline_color = Color( 0.701961, 0.054902, 0.054902, 1 )
+use_mipmaps = true
+font_data = ExtResource( 6 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 120, 120 )
+
+[sub_resource type="StyleBoxEmpty" id=5]
+
+[node name="Node2D" type="Node2D"]
+position = Vector2( 869.724, 409.532 )
+__meta__ = {
+"_edit_horizontal_guides_": [ 75.2645 ],
+"_edit_vertical_guides_": [ 1599.6 ]
+}
+
+[node name="background" type="Sprite" parent="."]
+position = Vector2( 7132.94, 39.1284 )
+texture = SubResource( 1 )
+script = ExtResource( 2 )
+
+[node name="bird" parent="." instance=ExtResource( 3 )]
+position = Vector2( -676.874, 34.1155 )
+scale = Vector2( 10, 10 )
+
+[node name="Panel" type="Panel" parent="."]
+visible = false
+margin_left = -870.0
+margin_top = -412.0
+margin_right = 735.0
+margin_bottom = 489.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Panel"]
+margin_left = 358.672
+margin_top = 201.791
+margin_right = 441.672
+margin_bottom = 218.791
+rect_scale = Vector2( 10, 10 )
+custom_fonts/font = SubResource( 2 )
+text = "GAME OVER"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="Panel"]
+margin_left = 407.656
+margin_top = 363.0
+margin_right = 479.656
+margin_bottom = 380.0
+rect_scale = Vector2( 10, 10 )
+custom_fonts/font = SubResource( 3 )
+text = "Score:"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="Panel"]
+margin_left = 266.01
+margin_top = 527.31
+margin_right = 346.01
+margin_bottom = 574.31
+rect_scale = Vector2( 5, 5 )
+text = "Play again"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button2" type="Button" parent="Panel"]
+margin_left = 895.838
+margin_top = 527.31
+margin_right = 979.838
+margin_bottom = 574.31
+rect_scale = Vector2( 5, 5 )
+text = "Main menu"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="."]
+position = Vector2( 395.295, 198.55 )
+normal = ExtResource( 5 )
+pressed = ExtResource( 4 )
+shape = SubResource( 4 )
+shape_visible = false
+action = "ui_accept"
+visibility_mode = 1
+
+[node name="Panel2" type="Panel" parent="."]
+margin_left = -861.662
+margin_top = -386.0
+margin_right = -647.662
+margin_bottom = -341.0
+custom_styles/panel = SubResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "Scoreboard"
+}
+
+[node name="Label" type="Label" parent="Panel2"]
+anchor_left = 0.417
+anchor_top = -0.243
+anchor_right = 0.758
+anchor_bottom = 0.801
+margin_left = -0.384796
+margin_top = -0.949566
+margin_right = -0.358795
+margin_bottom = -0.929569
+size_flags_vertical = 1
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "0"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="Panel2"]
+anchor_left = 0.417
+anchor_top = -0.243
+anchor_right = 0.758
+anchor_bottom = 0.801
+margin_left = -80.2211
+margin_top = 0.312664
+margin_right = -80.1951
+margin_bottom = 0.332661
+size_flags_vertical = 1
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "SCORE: "
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="area2D_entered" from="bird" to="background" method="_on_bird_area2D_entered"]
+[connection signal="pressed" from="Panel/Button" to="background" method="_on_Button_pressed"]
+[connection signal="pressed" from="Panel/Button2" to="background" method="_on_Button2_pressed"]
+[connection signal="timeout" from="Timer" to="background" method="_on_Timer_timeout"]

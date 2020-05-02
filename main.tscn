@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scripts/main.gd" type="Script" id=1]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = 277.338
+margin_top = 164.554
+margin_right = 349.338
+margin_bottom = 178.554
+rect_scale = Vector2( 12.9786, 14.9916 )
+text = "Fluppy Bird"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="."]
+margin_left = 558.906
+margin_top = 461.923
+margin_right = 634.906
+margin_bottom = 501.923
+rect_scale = Vector2( 5, 5 )
+text = "Graj"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
