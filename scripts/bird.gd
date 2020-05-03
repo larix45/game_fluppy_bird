@@ -5,10 +5,11 @@ extends Node2D
 # var a = 2
 # var b = "text"
 signal area2D_entered(area)
+export(String, "white", "blue", "green") var animation_type
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
+	$"AnimatedSprite".animation = animation_type
 	pass # Replace with function body.
 
 

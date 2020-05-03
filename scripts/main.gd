@@ -20,3 +20,9 @@ func _on_Button_pressed():
 	print("loading_game_scene")
 	get_tree().change_scene("res://scenes/game.tscn")
 	pass # Replace with function body.
+
+
+func _on_Button2_pressed():
+	print("loading_game_scene")
+	get_tree().change_scene("res://scenes/settings_screen.tscn")
+	pass # Replace with function body.

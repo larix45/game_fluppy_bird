@@ -13,11 +13,29 @@ var f_hiscore = File.new() # File with save of a hiscore
 var hiscore = -1
 var rng = RandomNumberGenerator.new()
 var luka_scene = load("res://scenes/luka.tscn")
+var settings = {"BirdColor"   : "blue",
+				"ColumnColor" : "green"}
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	rng.randomize()
+	# Settings restore at the begining of every game
+	var f_settings = File.new()
+	if not f_settings.file_exists("user://settings.dat"):
+		print_debug("Settings file does not exist. Creating new...")
+		f_settings.open("user://settings.dat", File.WRITE)
+		f_settings.store_var(settings)
+		f_settings.close()
+	f_settings.open("user://settings.dat", File.READ)	
+	settings = f_settings.get_var()
+	print_debug("Saved settings :  ", settings)
+	f_settings.close()
+	$"../bird".animation_type = settings["BirdColor"]
+	#$"../bird".animation_type = settings["ColumnColor"]
+	
+	
+	
 	f_hiscore.open("user://hiscore.save", File.READ)
 	hiscore = f_hiscore.get_var()
 	f_hiscore.close()
@@ -60,6 +78,7 @@ func _on_bird_area2D_entered(area):
 		luka_scene_object.position.y = self.position.y + rng.randf_range(-300,300)
 		luka_scene_object.scale = Vector2(15,20) 
 		columns += 1
+		luka_scene_object.column_color = settings["ColumnColor"]
 		self.add_child(luka_scene_object)
 		$"../Panel2/Label".text = String(score)
 		speed *= 1.1
@@ -84,6 +103,7 @@ func _on_Timer_timeout():
 	luka_scene_object.position.y = self.position.y + rng.randf_range(-300,300)
 	luka_scene_object.scale = Vector2(15,20) 
 	columns += 1
+	luka_scene_object.column_color = settings["ColumnColor"]
 	self.add_child(luka_scene_object)
 	if(columns > 4):
 		$"../Timer".stop()

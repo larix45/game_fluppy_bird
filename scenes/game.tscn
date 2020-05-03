@@ -35,10 +35,12 @@ __meta__ = {
 position = Vector2( 7132.94, 39.1284 )
 texture = SubResource( 1 )
 script = ExtResource( 2 )
+speed = 2
 
 [node name="bird" parent="." instance=ExtResource( 3 )]
 position = Vector2( -676.874, 34.1155 )
 scale = Vector2( 10, 10 )
+animation_type = "blue"
 
 [node name="Panel" type="Panel" parent="."]
 visible = false
