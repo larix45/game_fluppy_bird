@@ -17,6 +17,9 @@ func _physics_process(delta):
 	self.global_position.y += 3
 	if(Input.is_action_pressed("ui_accept")):
 		self.global_position.y -= 30
+		self.global_rotation_degrees = -7
+	else:
+		self.global_rotation_degrees = 7
 	pass
 
 
