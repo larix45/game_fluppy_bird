@@ -8,6 +8,9 @@ var points = 0 #liczba kolumn
 var columns = 0
 export var speed = 1
 export var score = 0 
+var stop_movemet = false # bool true = died and background need to stop moving
+var f_hiscore = File.new() # File with save of a hiscore
+var hiscore = -1
 var rng = RandomNumberGenerator.new()
 var luka_scene = load("res://scenes/luka.tscn")
 
@@ -15,8 +18,25 @@ var luka_scene = load("res://scenes/luka.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	rng.randomize()
+	f_hiscore.open("user://hiscore.save", File.READ)
+	hiscore = f_hiscore.get_var()
+	f_hiscore.close()
 	pass # Replace with function body.
-
+# Function called when tou die
+func die():
+	print("dead")
+	stop_movemet = true
+	$"../Panel".visible = true
+	$"../Panel/Label2".text = "Score: " + String(score) 
+	if(score > hiscore):
+		hiscore = score
+		f_hiscore.open("user://hiscore.save", File.WRITE_READ)
+		f_hiscore.store_var(hiscore)
+		print(f_hiscore.get_var())
+		f_hiscore.close()
+	$"../Panel/Label3".text = "Hicore: " + String(hiscore) 
+	
+	pass
 # CHEAT CODES
 func _input(event):
 	if(event.is_action("key_q")):
@@ -26,13 +46,10 @@ func _input(event):
 	pass
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if self.position.x > 100:
-		self.position.x = 1
-	self.position.x += -speed
+	if(!stop_movemet):
+		self.position.x += -speed
 	if $"../bird".global_position.y > 950 or $"../bird".global_position.y < -50:
-		print("dead")
-		$"../Panel".visible = true
-		$"../Panel/Label2".text = "score: " + String(score) 
+		die()
 	pass
 
 func _on_bird_area2D_entered(area):
@@ -47,9 +64,7 @@ func _on_bird_area2D_entered(area):
 		$"../Panel2/Label".text = String(score)
 		speed *= 1.1
 	if(area.type == 1):
-		print("dead")
-		$"../Panel".visible = true
-		$"../Panel/Label2".text = "score: " + String(score) 
+		die()
 	pass # Replace with function body.
 
 
